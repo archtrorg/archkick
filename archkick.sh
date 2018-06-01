@@ -115,6 +115,7 @@ then
 	echo "o = Openbox"
 	echo "i = i3wm"
 	echo "f = Fluxbox"
+	echo "p = Bspwm"
 	echo "[g/k/x/l/b/m/o/i/f]?"
 	read -rsn1 da
 	if [ "$da" = "g" ]
@@ -164,8 +165,13 @@ then
 	then
 		echo "Note: Installing a window manager requires some experience..."
 		sleep 1
-		pacman -S i3
+		pacman -S i3-gaps i3lock i3block i3status imagemagick
 	elif [ "$da" = "f" ]
+	then
+		echo "Note: Installing a window manager requires some experience..."
+		sleep 1
+		pacman -S bspwm
+	elif [ "$da" = "p" ]
 	then
 		echo "Note: Installing a window manager requires some experience..."
 		sleep 1
@@ -310,6 +316,24 @@ then
 	if [ "$chc" = "y" ]
 	then
 		pacman -S lxappearance
+	fi
+	echo "Do you want Polybar? [y/n]"
+	read -rsn1 chc
+	if [ "$chc" = "y" ]
+	then
+		pacman -S polybar
+	fi
+	echo "Do you want Dunst? [y/n]"
+	read -rsn1 chc
+	if [ "$chc" = "y" ]
+	then
+		pacman -S dunst
+	fi
+	echo "Do you want rofi? [y/n]"
+	read -rsn1 chc
+	if [ "$chc" = "y" ]
+	then
+		pacman -S rofi
 	fi
 	echo "You are at the end of the line for packages."
 	sleep 1
