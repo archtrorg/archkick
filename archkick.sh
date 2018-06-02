@@ -238,12 +238,13 @@ then
 	read -rsn1 chc
 	if [ "$chc" = "y" ]
 	then
-		echo "" >> /etc/pacman.conf
-		echo "[archlinuxfr]" >> /etc/pacman.conf
-		echo "SigLevel = Never" >> /etc/pacman.conf
-		echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
-		pacman -Sy
-		pacman -S yaourt
+		# echo "" >> /etc/pacman.conf
+		# echo "[archlinuxfr]" >> /etc/pacman.conf
+		# echo "SigLevel = Never" >> /etc/pacman.conf
+		# echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
+		# pacman -Sy
+		# pacman -S yaourt
+		echo "Yaourt is broken, sorry for the inconvience."
 	fi
 	echo "Do you want emacs? [y/n]"
 	read -rsn1 chc
@@ -334,6 +335,18 @@ then
 	if [ "$chc" = "y" ]
 	then
 		pacman -S rofi
+	fi
+	echo "Do you want git? [y/n]"
+	read -rsn1 chc
+	if [ "$chc" = "y" ]
+	then
+		pacman -S git
+	fi
+	echo "Do you want a pet cat? [y/n]"
+	read -rsn1 chc
+	if [ "$chc" = "y" ]
+	then
+		echo "MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!!"
 	fi
 	echo "You are at the end of the line for packages."
 	sleep 1
