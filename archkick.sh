@@ -10,6 +10,7 @@ then
 	echo "Listing all Zones"
 	ls /usr/share/zoneinfo/
 	echo -n "Please type your zone [EX America]: "
+	# dia
 	read zonein
 	if [ ! -d "/usr/share/zoneinfo/$zonein" ]
 	then
@@ -32,6 +33,7 @@ then
 	then
 	    echo "ERROR: Please enter a valid subzone"
 	    echo "Make sure you include the capital letters!"
+	    # why does commenting extst dialog
 	    sleep 2
 	else
 	    break
@@ -44,6 +46,7 @@ then
     echo "All you need to do is uncomment the line that contains your locale!"
     echo "For example: '#text', will become 'text' instead!"
     echo "Would you like to edit that file? [y/n]"
+    # e is a whole me
     read -rsn1 chck
     if [ "$chck" = "y" ]
     then
@@ -72,6 +75,7 @@ then
     echo ">>> Generating grub file..."
     grub-mkconfig -o /boot/grub/grub.cfg
     clear
+    # you know what needs to be done here saderror
     echo "Hooray! You made it! :D. Your system is all ready for use... but, not entirely."
     echo "Now it is time for a post-install."
     echo "You are safe to reboot without doing a post install, which means"
@@ -89,6 +93,7 @@ then
     read -rsn1
     clear
     echo "- Create your account -"
+    # dialog this bit will need decision
     echo "Please use characters a-z, A-Z, 1-9, and '-'."
     echo "Good username: bobthe-Cat0123"
     echo "BAD username: Bobby The Cat 42"
@@ -106,6 +111,7 @@ then
     echo "To select: Simply press the letter that you install, for example:"
     echo "Pressing 'g' installs the Gnome desktop environment"
     echo ""
+    # me want dialog here
     echo "g = GNOME"
     echo "k = KDE Plasma"
     echo "x = Xfce"
@@ -206,6 +212,7 @@ then
     pacman -S pa-applet
     systemctl enable pa-applet
     clear
+    # hey dialog me
     echo "Tool installation"
     echo "------------------"
     echo "Do you want firefox? [y/n]"
@@ -376,55 +383,26 @@ then
     sleep 1
     exit
 else
-    clear
-    echo "Welcome to ArchKick! v1.1"
-    echo "-----------------------------------------------------"
-    echo "ArchKick is made for making arch easier to install!"
-    echo "It reduces the pain and time of installing arch linux"
-    echo "with a simplified installer, it also provides extra"
-    echo "settings like picking a desktop environment/window"
-    echo "manager so you dont have to spend hours configuring"
-    echo "things!"
-    echo "-----------------------------------------------------"
-    echo "            Press any key to continue"
-    read -rsn1
-    clear
-    echo "Notice"
-    echo "-----------------------------------------------------"
-    echo "ArchKick isnt perfect, so just note these, PS, these"
-    echo "are temporary and will be added in the future!"
-    echo "  - You are to be using a legacy bios, not UEFI."
-    echo "  - Only english keymap support, a fork would be"
-    echo "    needed for multiple versions"
-    echo "  - May not work for nvidia drivers"
-    echo "  - May not work on all machines"
-    echo "A try is worth of course, just be careful not to break"
-    echo "Your whole system! This guy may nuke!"
-    echo "-----------------------------------------------------"
-    echo "             Press any key to continue"
-    read -rsn1
-    clear
-    while true
-    do
-	echo "Do you use wifi or ethernet?  [w/e]"
-	read -rsn1 chc
-	if [ "$chc" = "w" ]
-	then
-	    echo "Wifi selected. Running wifi-menu tool"
-	    wifi-menu
-	    break
-	elif [ "$chc" = "e" ]
-	then
-	    echo "Ethernet selected, no problem since it works out of the box!"
-	    break
-	else
-	    clear
-	fi
-    done
+    dialog --backtitle "ArchKick v2.0" --msgbox "Archkick is made for making arch easier to install! It reduces the pain and time of installing arch linux with a simplified installer, it also provides extra settings like picking a desktop environment/window manager so you dont have to spend hours configuring things!" 13 40
+    dialog --backtitle "ArchKick v2.0" --msgbox "Notice:\nArchkick isnt perfect, so just note these, PS, these are temporary and will be added in the future.\n  - You are to be using a legacy bios, not UEFI.\n  - Only english keymap support, a fork would be needed for multiple version\n  - May not work for nvidia drivers\n  - May not work on all machine\nA try is worth of course, just be careful not to break your whole system. This guy may nuke." 16 60
+    dialog --yes-label "Wifi" --no-label "Ethernet" --yesno "Do you use wifi or ethernet?" 6 50
+    chc=$?
+    if [ $chc = 0 ]
+    then
+	echo "Wifi selected. Running wifi-menu tool"
+	wifi-menu
+	break
+    elif [ $chc = 1 ]
+    then
+	echo "Ethernet selected, no problem since it works out of the box!"
+	break
+    else
+	break
     echo ">>> Updating system clock"
     timedatectl set-ntp true
     clear
     echo "= Partitioning ="
+    # Could probably dialog this bit up here
     echo "Showing all devices"
     lsblk
     echo "Please format your answer like this, sda, sdb, sdc, and so on..."
@@ -437,6 +415,7 @@ else
     while true
     do
 	echo "Are you going to use swap? [y/n]"
+	# dialog this bit as well
 	read -rsn1 swapa
 	if [ "$swapa" = "y" ]
 	then
@@ -458,6 +437,7 @@ else
     echo "A second device [ex, laptop] and see how to use it!"
     echo "REMEMBER to write the changes to disk once done!"
     echo ""
+    # dialog me
     echo "Summary"
     echo "- Root will be on $partname$partnum"
     echo "- Swap will be on $partname$swapnum"
@@ -474,6 +454,7 @@ else
     echo "Note, next thing requires knowledge of the nano text editor"
     echo "Do you want to edit the mirrorlist file, you should [y/n]"
     read -rsn1 rchc
+    # yo can you dialog me
     if [ "$rchc" = "y" ]
     then
 	echo "Note: To save and exit, do"
@@ -490,6 +471,7 @@ else
     clear
     echo "Getting ready to install the host system fully..."
     echo ""
+    # sorry but im too lazy to dialog you sam
     echo "For packages such as sudo, you should choose the base-devel package!"
     echo "Meaning, go for the base-devel option."
     echo ""
