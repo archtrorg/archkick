@@ -238,12 +238,6 @@ then
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	# echo "" >> /etc/pacman.conf
-	# echo "[archlinuxfr]" >> /etc/pacman.conf
-	# echo "SigLevel = Never" >> /etc/pacman.conf
-	# echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
-	# pacman -Sy
-	# pacman -S yaourt
 	echo "Yaourt is broken, sorry for the inconvience."
     fi
     echo "Do you want emacs? [y/n]"
