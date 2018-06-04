@@ -116,7 +116,8 @@ then
     echo "i = i3wm"
     echo "f = Fluxbox"
     echo "p = Bspwm"
-    echo "[g/k/x/l/b/m/o/i/f]?"
+    echo "a = Awesome"
+    echo "[g/k/x/l/b/m/o/i/f/p/a]?"
     read -rsn1 da
     if [ "$da" = "g" ]
     then
@@ -170,12 +171,15 @@ then
     then
 	echo "Note: Installing a window manager requires some experience..."
 	sleep 1
-	pacman -S bspwm
+	pacman -S fluxbox
     elif [ "$da" = "p" ]
     then
 	echo "Note: Installing a window manager requires some experience..."
 	sleep 1
-	pacman -S fluxbox
+	pacman -S bspwm
+    elif [ "$da" = "a" ]
+    then
+	pacman -S awesome
     else
 	echo "You did not choose a valid de/wm, skipping!"
     fi
@@ -336,7 +340,13 @@ then
     then
 	pacman -S git
     fi
-    echo "Do you want a pet cat? [y/n]"
+    echo "Do you want vim? [term] [y/n]"
+    read -rsn1 chc
+    if [ "$chc" = "y" ]
+    then
+	pacman -S vim
+    fi
+    echo "Do you want a pet cat? [joke] [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
