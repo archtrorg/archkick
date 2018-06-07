@@ -219,145 +219,145 @@ then
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S firefox
+    	pacman -S firefox
     fi
     echo "Do you want chromium? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S chromium
+    	pacman -S chromium
     fi
     echo "Do you want kdenlive? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S kdenlive
+    	pacman -S kdenlive
     fi
     echo "Do you want Geany? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S geany
+    	pacman -S geany
     fi
     echo "Do you want Geary for email? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S geary
+    	pacman -S geary
     fi
     echo "Do you want yaourt for AUR [recommended]? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	echo "Yaourt is broken, sorry for the inconvience."
+    	echo "Yaourt is broken, sorry for the inconvience."
     fi
     echo "Do you want emacs? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S emacs
+    	pacman -S emacs
     fi
     echo "Do you want telegram? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S telegram-desktop
+    	pacman -S telegram-desktop
     fi
     echo "Do you want riot messenger? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S riot-desktop
+    	pacman -S riot-desktop
     fi
     echo "Do you want libreoffice? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S libreoffice-fresh
+	   pacman -S libreoffice-fresh
     fi
     echo "Do you want hexchat? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S hexchat
+	   pacman -S hexchat
     fi
     echo "Do you want simplescreenrecorder? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S simplescreenrecorder
+	   pacman -S simplescreenrecorder
     fi
     echo "Do you want OBS Studio? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S obs-studio
+	   pacman -S obs-studio
     fi
     echo "Do you want lmms? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S lmms
+    	pacman -S lmms
     fi
     echo "Do you want gimp? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S gimp
+	   pacman -S gimp
     fi
     echo "Do you want vlc? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S vlc
+    	pacman -S vlc
     fi
     echo "Do you want htop [term]? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S htop
+    	pacman -S htop
     fi
     echo "Do you want lxappearance? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S lxappearance
+    	pacman -S lxappearance
     fi
     echo "Do you want Polybar? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S polybar
+    	pacman -S polybar
     fi
     echo "Do you want Dunst? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S dunst
+	   pacman -S dunst
     fi
     echo "Do you want rofi? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S rofi
+    	pacman -S rofi
     fi
     echo "Do you want git? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S git
+    	pacman -S git
     fi
     echo "Do you want vim? [term] [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	pacman -S vim
+    	pacman -S vim
     fi
-    echo "Do you want a pet cat? [joke] [y/n]"
-    read -rsn1 chc
+        echo "Do you want a pet cat? [joke] [y/n]"
+        read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-	echo "MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!!"
+    	echo "MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!!"
     fi
     echo "You are at the end of the line for packages."
     sleep 1
@@ -389,15 +389,16 @@ else
     chc=$?
     if [ $chc = 0 ]
     then
-	echo "Wifi selected. Running wifi-menu tool"
-	wifi-menu
-	break
+    	echo "Wifi selected. Running wifi-menu tool"
+        wifi-menu
+    	break
     elif [ $chc = 1 ]
     then
-	echo "Ethernet selected, no problem since it works out of the box!"
-	break
+        echo "Ethernet selected, no problem since it works out of the box!"
+        break
     else
-	break
+        break
+    fi
     echo ">>> Updating system clock"
     timedatectl set-ntp true
     clear
