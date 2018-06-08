@@ -385,7 +385,7 @@ then
 else
     dialog --backtitle "ArchKick v2.0" --msgbox "Archkick is made for making arch easier to install! It reduces the pain and time of installing arch linux with a simplified installer, it also provides extra settings like picking a desktop environment/window manager so you dont have to spend hours configuring things!" 13 40
     dialog --backtitle "ArchKick v2.0" --msgbox "Notice:\nArchkick isnt perfect, so just note these, PS, these are temporary and will be added in the future.\n  - You are to be using a legacy bios, not UEFI.\n  - Only english keymap support, a fork would be needed for multiple version\n  - May not work for nvidia drivers\n  - May not work on all machine\nA try is worth of course, just be careful not to break your whole system. This guy may nuke." 16 60
-    dialog --yes-label "Wifi" --no-label "Ethernet" --yesno "Do you use wifi or ethernet?" 6 50
+    dialog --backtitle "ArchKick v2.0" --yes-label "Wifi" --no-label "Ethernet" --yesno "Do you use wifi or ethernet?" 6 50
     chc=$?
     if [ $chc = 0 ]
     then
@@ -433,59 +433,36 @@ else
 	    clear
 	fi
     done
-    echo "Opening cfdisk for ease of use!"
-    echo "If you are unsure how to use it, you can always pull up"
-    echo "A second device [ex, laptop] and see how to use it!"
-    echo "REMEMBER to write the changes to disk once done!"
-    echo ""
-    # dialog me
-    echo "Summary"
-    echo "- Root will be on $partname$partnum"
-    echo "- Swap will be on $partname$swapnum"
+    dialog --backtitle "ArchKick v2.0" --msgbox "Opening cfdisk for ease of use. If you are unsure how to use it, you can always pull up a second device and see how to use it. Remember to write the changes to disk once done.\n\nSummary\n- Root will be on $partname$partnum\n- Swap will be on $partname$swapnum" 13 50
     cfdisk /dev/$partname
     echo "Formatting root as ext4..."
     mkfs.ext4 /dev/$partname$partnum
-    if [ "$swap" = "yes" ]
+    if [ "$swap" = "on" ]
     then
 	echo "Creating swap..."
 	mkswap /dev/$partname$swapnum
 	swapon /dev/$partname$swapnum
     fi
     mount /dev/$partname$partnum /mnt
-    echo "Note, next thing requires knowledge of the nano text editor"
-    echo "Do you want to edit the mirrorlist file, you should [y/n]"
-    read -rsn1 rchc
-    # yo can you dialog me
-    if [ "$rchc" = "y" ]
+    dialog --backtitle "ArchKick v2.0" --yesno "Do you want to edit the mirrorlist file? You probably should." 7 50
+    rchc=$?
+    if [ $rchc = 0 ]
     then
-	echo "Note: To save and exit, do"
-	echo "  CTRL+X -> Y -> ENTER"
-	echo "Press any key to continue"
-	read -rsn1
 	nano /etc/pacman.d/mirrorlist
-    elif [ "$rchc" = "n" ]
+    elif [ $rchc = 0 ]
     then
 	echo "Skipping then..."
     else
 	echo "Skipping then..."
     fi
     clear
-    echo "Getting ready to install the host system fully..."
-    echo ""
-    # sorry but im too lazy to dialog you sam
-    echo "For packages such as sudo, you should choose the base-devel package!"
-    echo "Meaning, go for the base-devel option."
-    echo ""
-    echo "If you want the Base-devel package, press 'y' [recommended]"
-    echo "If you just want the Base package, press 'n' [not recommended]"
-    echo "If you are confused, just press 'y'."
-    echo "[y/n]?"
-    read -rsn1 chcc
-    if [ "$chcc" = "y" ]
+    dialog --backtitle "ArchKick v2.0" --yes-label "Full" --no-label "Base" --yesno "Getting ready to install the full system.\n\nIf you want base and base-devel, select full.\nIf you want base only, select base.\n\nIf you are confused, please select full." 10 50
+    chcc=$?
+    if [ $chcc = 0 ]
     then
 	echo "Installing the base and base-devel!"
 	pacstrap /mnt base base-devel
-    elif [ "$chcc" = "n" ]
+    elif [ $chcc = 1 ]
     then
 	echo "Ok, installing base only. [Not recommended]"
 	pacstrap /mnt base
