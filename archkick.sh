@@ -113,7 +113,8 @@ then
     echo ""
     # me want dialog here
     echo "a = Awesome"
-    echo "b = Budgie"
+    echo "b = Budgie (Will also install GNOME)"
+    echo "d = Deepin"
     echo "f = Fluxbox"
     echo "g = GNOME"
     echo "i = i3wm"
@@ -123,15 +124,15 @@ then
     echo "o = Openbox"
     echo "p = Bspwm"
     echo "x = Xfce"
-    echo "[a/b/f/g/i/k/l/m/o/p/x]?"
+    echo "[a/b/d/f/g/i/k/l/m/o/p/x]?"
     read -rsn1 da
     if [ "$da" = "g" ]
     then
 	echo "Installing GNOME..."
 	echo "Continue pressing enter to accept all dependencies"
 	sleep 1
-	pacman -S gnome gnome-extra terminator gdm
-	echo "Note: Gnome-terminal is broken... use terminator"
+	pacman -S gnome gnome-extra gdm tilix
+	echo "Note: Gnome-terminal is broken... use tilix"
 	sleep 2
     elif [ "$da" = "k" ]
     then
@@ -156,7 +157,8 @@ then
 	echo "Installing Budgie..."
 	echo "Continue pressing enter to accept all dependencies"
 	sleep 1
-	pacman -S budgie-desktop lightdm
+	pacman -S budgie-desktop gnome gnome-extra tilix
+	echo "Note: Gnome-terminal is broken... use tilix"
     elif [ "$da" = "m" ]
     then
 	echo "Installing Mate..."
@@ -186,6 +188,9 @@ then
     elif [ "$da" = "a" ]
     then
 	pacman -S awesome
+	elif [ "$da" = "d" ]
+    then
+	pacman -S deepin deepin-extra
     else
 	echo "You did not choose a valid de/wm, skipping!"
     fi
@@ -194,14 +199,14 @@ then
     pacman -S xorg xorg-server
     if [ "$da" = "g" ]
     then
-	systemctl enable gdm
+	systemctl enable gdm.service
     elif [ "$da" = "k" ]
     then
-	systemctl enable sddm
+	systemctl enable sddm.service
     else
 	echo "Installing your display manager..."
-	pacman -S lxdm
-	systemctl enable lxdm
+	pacman -S lightdm
+	systemctl enable lightdm
     fi
     systemctl enable NetworkManager
     pacman -S network-manager-applet
