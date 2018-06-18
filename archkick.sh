@@ -122,9 +122,10 @@ then
     echo "l = LXDE"
     echo "m = MATE"
     echo "o = Openbox"
-    echo "p = Bspwm"
+    echo "p = Pantheon"
+    echo "w = Bspwm"
     echo "x = Xfce"
-    echo "[a/b/d/f/g/i/k/l/m/o/p/x]?"
+    echo "[a/b/d/f/g/i/k/l/m/o/p/w/x]?"
     read -rsn1 da
     if [ "$da" = "g" ]
     then
@@ -180,7 +181,7 @@ then
 	echo "Note: Installing a window manager requires some experience..."
 	sleep 1
 	pacman -S fluxbox
-    elif [ "$da" = "p" ]
+    elif [ "$da" = "w" ]
     then
 	echo "Note: Installing a window manager requires some experience..."
 	sleep 1
@@ -191,6 +192,9 @@ then
 	elif [ "$da" = "d" ]
     then
 	pacman -S deepin deepin-extra
+	elif [ "$da" = "p" ]
+    then
+	pacman -S pantheon
     else
 	echo "You did not choose a valid de/wm, skipping!"
     fi
