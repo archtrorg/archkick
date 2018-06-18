@@ -114,6 +114,7 @@ then
     # me want dialog here
     echo "a = Awesome"
     echo "b = Budgie (Will also install GNOME)"
+    echo "c = Cinnamon (Alpha)"
     echo "d = Deepin"
     echo "f = Fluxbox"
     echo "g = GNOME"
@@ -195,6 +196,9 @@ then
 	elif [ "$da" = "p" ]
     then
 	pacman -S pantheon
+	elif [ "$da" = "c" ]
+	then
+	pacman -S cinnamon nemo-fileroller
     else
 	echo "You did not choose a valid de/wm, skipping!"
     fi
@@ -224,6 +228,18 @@ then
     # hey dialog me
     echo "Tool installation"
     echo "------------------"
+    echo "Do you want adapta? [y/n]"
+    read -rsn1 chc
+    if [ "$chc" = "y" ]
+    then
+    	pacman -S adapta-gtk-theme
+    fi
+    echo "Do you want papirus? [y/n]"
+    read -rsn1 chc
+    if [ "$chc" = "y" ]
+    then
+    	pacman -S papirus-icon-theme
+    fi
     echo "Do you want firefox? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
@@ -258,7 +274,16 @@ then
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-    	echo "Yaourt is broken, sorry for the inconvience."
+    	sudo pacman -S --needed base-devel git wget yajl
+    	git clone https://aur.archlinux.org/package-query.git
+    	cd package-query/
+    	makepkg -si
+    	cd ..
+    	git clone https://aur.archlinux.org/yaourt.git
+    	cd yaourt.git
+    	makepkg -si
+    	cd ..
+    	sudo rm -dR yaourt/ package-query/
     fi
     echo "Do you want emacs? [y/n]"
     read -rsn1 chc
@@ -350,7 +375,7 @@ then
     then
     	pacman -S rofi
     fi
-    echo "Do you want git? [y/n]"
+    echo "Do you want git (Already installed if you install yaourt)? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
@@ -361,12 +386,6 @@ then
     if [ "$chc" = "y" ]
     then
     	pacman -S vim
-    fi
-        echo "Do you want a pet cat? [joke] [y/n]"
-        read -rsn1 chc
-    if [ "$chc" = "y" ]
-    then
-    	echo "MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!!"
     fi
     echo "You are at the end of the line for packages."
     sleep 1
