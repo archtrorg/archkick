@@ -213,12 +213,11 @@ then
 	systemctl enable sddm.service
     else
 	echo "Installing your display manager..."
-	pacman -S lightdm
+	pacman -S lightdm lightdm-gtk-greeter
 	systemctl enable lightdm
     fi
     systemctl enable NetworkManager
     pacman -S network-manager-applet
-    systemctl enable nm-applet
     echo "Installing pulseaudio so you can hear the ocean... :D"
     pacman -S pulseaudio
     systemctl enable pulseaudio.socket
