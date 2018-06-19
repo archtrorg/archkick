@@ -112,26 +112,29 @@ then
     echo "Pressing 'g' installs the Gnome desktop environment"
     echo ""
     # me want dialog here
+    echo "a = Awesome"
+    echo "b = Budgie (Will also install GNOME)"
+    echo "c = Cinnamon (Alpha)"
+    echo "d = Deepin"
+    echo "f = Fluxbox"
     echo "g = GNOME"
+    echo "i = i3wm"
     echo "k = KDE Plasma"
-    echo "x = Xfce"
     echo "l = LXDE"
-    echo "b = Budgie"
     echo "m = MATE"
     echo "o = Openbox"
-    echo "i = i3wm"
-    echo "f = Fluxbox"
-    echo "p = Bspwm"
-    echo "a = Awesome"
-    echo "[g/k/x/l/b/m/o/i/f/p/a]?"
+    echo "p = Pantheon"
+    echo "w = Bspwm"
+    echo "x = Xfce"
+    echo "[a/b/d/f/g/i/k/l/m/o/p/w/x]?"
     read -rsn1 da
     if [ "$da" = "g" ]
     then
 	echo "Installing GNOME..."
 	echo "Continue pressing enter to accept all dependencies"
 	sleep 1
-	pacman -S gnome gnome-extra terminator gdm
-	echo "Note: Gnome-terminal is broken... use terminator"
+	pacman -S gnome gnome-extra gdm tilix
+	echo "Note: Gnome-terminal is broken... use tilix"
 	sleep 2
     elif [ "$da" = "k" ]
     then
@@ -156,7 +159,8 @@ then
 	echo "Installing Budgie..."
 	echo "Continue pressing enter to accept all dependencies"
 	sleep 1
-	pacman -S budgie-desktop lightdm
+	pacman -S budgie-desktop gnome gnome-extra tilix
+	echo "Note: Gnome-terminal is broken... use tilix"
     elif [ "$da" = "m" ]
     then
 	echo "Installing Mate..."
@@ -178,7 +182,7 @@ then
 	echo "Note: Installing a window manager requires some experience..."
 	sleep 1
 	pacman -S fluxbox
-    elif [ "$da" = "p" ]
+    elif [ "$da" = "w" ]
     then
 	echo "Note: Installing a window manager requires some experience..."
 	sleep 1
@@ -186,6 +190,15 @@ then
     elif [ "$da" = "a" ]
     then
 	pacman -S awesome
+	elif [ "$da" = "d" ]
+    then
+	pacman -S deepin deepin-extra
+	elif [ "$da" = "p" ]
+    then
+	pacman -S pantheon
+	elif [ "$da" = "c" ]
+	then
+	pacman -S cinnamon nemo-fileroller
     else
 	echo "You did not choose a valid de/wm, skipping!"
     fi
@@ -194,14 +207,14 @@ then
     pacman -S xorg xorg-server
     if [ "$da" = "g" ]
     then
-	systemctl enable gdm
+	systemctl enable gdm.service
     elif [ "$da" = "k" ]
     then
-	systemctl enable sddm
+	systemctl enable sddm.service
     else
 	echo "Installing your display manager..."
-	pacman -S lxdm
-	systemctl enable lxdm
+	pacman -S lightdm
+	systemctl enable lightdm
     fi
     systemctl enable NetworkManager
     pacman -S network-manager-applet
@@ -215,6 +228,18 @@ then
     # hey dialog me
     echo "Tool installation"
     echo "------------------"
+    echo "Do you want adapta? [y/n]"
+    read -rsn1 chc
+    if [ "$chc" = "y" ]
+    then
+    	pacman -S adapta-gtk-theme
+    fi
+    echo "Do you want papirus? [y/n]"
+    read -rsn1 chc
+    if [ "$chc" = "y" ]
+    then
+    	pacman -S papirus-icon-theme
+    fi
     echo "Do you want firefox? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
@@ -249,7 +274,16 @@ then
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
-    	echo "Yaourt is broken, sorry for the inconvience."
+    	sudo pacman -S --needed base-devel git wget yajl
+    	git clone https://aur.archlinux.org/package-query.git
+    	cd package-query/
+    	makepkg -si
+    	cd ..
+    	git clone https://aur.archlinux.org/yaourt.git
+    	cd yaourt.git
+    	makepkg -si
+    	cd ..
+    	sudo rm -dR yaourt/ package-query/
     fi
     echo "Do you want emacs? [y/n]"
     read -rsn1 chc
@@ -341,7 +375,7 @@ then
     then
     	pacman -S rofi
     fi
-    echo "Do you want git? [y/n]"
+    echo "Do you want git (Already installed if you install yaourt)? [y/n]"
     read -rsn1 chc
     if [ "$chc" = "y" ]
     then
@@ -352,12 +386,6 @@ then
     if [ "$chc" = "y" ]
     then
     	pacman -S vim
-    fi
-        echo "Do you want a pet cat? [joke] [y/n]"
-        read -rsn1 chc
-    if [ "$chc" = "y" ]
-    then
-    	echo "MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!! MEOW!!!"
     fi
     echo "You are at the end of the line for packages."
     sleep 1
