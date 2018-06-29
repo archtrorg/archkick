@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+akversion="2.0"
+
 if [ "$1" = "inchroot" ]
 then
     echo "If you see this text, you are now in your system (or chrooted)!"
@@ -410,9 +413,9 @@ then
     sleep 1
     exit
 else
-    dialog --backtitle "ArchKick v2.0" --msgbox "Archkick is made for making arch easier to install! It reduces the pain and time of installing arch linux with a simplified installer, it also provides extra settings like picking a desktop environment/window manager so you dont have to spend hours configuring things!" 13 40
-    dialog --backtitle "ArchKick v2.0" --msgbox "Notice:\nArchkick isnt perfect, so just note these, PS, these are temporary and will be added in the future.\n  - You are to be using a legacy bios, not UEFI.\n  - Only english keymap support, a fork would be needed for multiple version\n  - May not work for nvidia drivers\n  - May not work on all machine\nA try is worth of course, just be careful not to break your whole system. This guy may nuke." 16 60
-    dialog --backtitle "ArchKick v2.0" --yes-label "Wifi" --no-label "Ethernet" --yesno "Do you use wifi or ethernet?" 6 50
+    dialog --backtitle "ArchKick v$akversion" --msgbox "Archkick is made for making arch easier to install! It reduces the pain and time of installing arch linux with a simplified installer, it also provides extra settings like picking a desktop environment/window manager so you dont have to spend hours configuring things!" 13 40
+    dialog --backtitle "ArchKick v$akversion" --msgbox "Notice:\nArchkick isnt perfect, so just note these, PS, these are temporary and will be added in the future.\n  - You are to be using a legacy bios, not UEFI.\n  - Only english keymap support, a fork would be needed for multiple version\n  - May not work for nvidia drivers\n  - May not work on all machine\nA try is worth of course, just be careful not to break your whole system. This guy may nuke." 16 60
+    dialog --backtitle "ArchKick v$akversion" --yes-label "Wifi" --no-label "Ethernet" --yesno "Do you use wifi or ethernet?" 6 50
     chc=$?
     if [ $chc = 0 ]
     then
@@ -429,8 +432,7 @@ else
     echo ">>> Updating system clock"
     timedatectl set-ntp true
     clear
-    echo "= Partitioning ="
-    # Could probably dialog this bit up here
+    echo " Partitioning "
     echo "Showing all devices"
     lsblk
     echo "Please format your answer like this, sda, sdb, sdc, and so on..."
@@ -460,7 +462,7 @@ else
 	    clear
 	fi
     done
-    dialog --backtitle "ArchKick v2.0" --msgbox "Opening cfdisk for ease of use. If you are unsure how to use it, you can always pull up a second device and see how to use it. Remember to write the changes to disk once done.\n\nSummary\n- Root will be on $partname$partnum\n- Swap will be on $partname$swapnum" 13 50
+    dialog --backtitle "ArchKick v$akversion" --msgbox "Opening cfdisk for ease of use. If you are unsure how to use it, you can always pull up a second device and see how to use it. Remember to write the changes to disk once done.\n\nSummary\n- Root will be on $partname$partnum\n- Swap will be on $partname$swapnum" 13 50
     cfdisk /dev/$partname
     echo "Formatting root as ext4..."
     mkfs.ext4 /dev/$partname$partnum
@@ -471,7 +473,7 @@ else
 	swapon /dev/$partname$swapnum
     fi
     mount /dev/$partname$partnum /mnt
-    dialog --backtitle "ArchKick v2.0" --yesno "Do you want to edit the mirrorlist file? You probably should." 7 50
+    dialog --backtitle "ArchKick v$akversion" --yesno "Do you want to edit the mirrorlist file? You probably should." 7 50
     rchc=$?
     if [ $rchc = 0 ]
     then
@@ -483,7 +485,7 @@ else
 	echo "Skipping then..."
     fi
     clear
-    dialog --backtitle "ArchKick v2.0" --yes-label "Full" --no-label "Base" --yesno "Getting ready to install the full system.\n\nIf you want base and base-devel, select full.\nIf you want base only, select base.\n\nIf you are confused, please select full." 10 50
+    dialog --backtitle "ArchKick v$akversion" --yes-label "Full" --no-label "Base" --yesno "Getting ready to install the full system.\n\nIf you want base and base-devel, select full.\nIf you want base only, select base.\n\nIf you are confused, please select full." 10 50
     chcc=$?
     if [ $chcc = 0 ]
     then
