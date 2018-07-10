@@ -34,9 +34,7 @@ then
 	read subin
 	if [ ! -f "/usr/share/zoneinfo/$zonein/$subin" ]
 	then
-	    echo "ERROR: Please enter a valid subzone"
-	    echo "Make sure you include the capital letters!"
-	    # why does commenting extst dialog
+	    dialog --backtitle "ArchKick v$akversion" --infobox "ERROR: Please enter a valid subzone\nMake sure you include the capital letters" 10 40
 	    sleep 2
 	else
 	    break
@@ -45,11 +43,8 @@ then
     ln -sf /usr/share/zoneinfo/$zonein/$subin /etc/localtime
     echo ">>> Using hardware clock to generate..."
     hwclock --systohc
-    echo "We are going to use nano again to edit the locale file!"
-    echo "All you need to do is uncomment the line that contains your locale!"
-    echo "For example: '#text', will become 'text' instead!"
+    dialog --backtitle "ArchKick v$akversion" --infobox "We are going to use nano to edit the locale file, nano is easy to use.\nctrl+x Y enter to save your changes" 10 40
     echo "Would you like to edit that file? [y/n]"
-    # e is a whole me
     read -rsn1 chck
     if [ "$chck" = "y" ]
     then
@@ -93,10 +88,10 @@ then
     echo "A post install is totally recommended! Meaning you should do it"
     echo "-------------------------------------------"
     echo "  Press any key to enter the post install"
+    dialog --backtitle "ArchKick v$akversion" --msgbox "Hooray! You are in the post-install\n\nThe post install will:\n- Let you setup your user account\n- Install your favorite tools upon user confirmation\n- Install a desktop environment or window manager\n- Extra steps to ensure your install is ok\nYou are safe to reboot, but you should do the post install, its totally recommended!" 30 50
     read -rsn1
     clear
     echo "- Create your account -"
-    # dialog this bit will need decision
     echo "Please use characters a-z, A-Z, 1-9, and '-'."
     echo "Good username: bobthe-Cat0123"
     echo "BAD username: Bobby The Cat 42"
@@ -110,11 +105,10 @@ then
     echo "$usname ALL=(ALL) ALL" >> /etc/sudoers
     echo "User creation done..."
     clear
-    echo "Desktop environments and window managers"
+    echo ">>> Desktop environments and window managers"
     echo "To select: Simply press the letter that you install, for example:"
     echo "Pressing 'g' installs the Gnome desktop environment"
     echo ""
-    # me want dialog here
     echo "a = Awesome"
     echo "b = Budgie (Will also install GNOME)"
     echo "c = Cinnamon (Alpha)"
@@ -227,7 +221,6 @@ then
     pacman -S pa-applet
     systemctl enable pa-applet
     clear
-    # hey dialog me
     echo "Tool installation"
     echo "------------------"
     echo "Do you want adapta? [y/n]"
@@ -432,7 +425,7 @@ else
     echo ">>> Updating system clock"
     timedatectl set-ntp true
     clear
-    echo " Partitioning "
+    echo ">>> Partitioning "
     echo "Showing all devices"
     lsblk
     echo "Please format your answer like this, sda, sdb, sdc, and so on..."
@@ -445,7 +438,6 @@ else
     while true
     do
 	echo "Are you going to use swap? [y/n]"
-	# dialog this bit as well
 	read -rsn1 swapa
 	if [ "$swapa" = "y" ]
 	then
