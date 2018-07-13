@@ -4,13 +4,13 @@ akversion="2.0"
 
 if [ "$1" = "inchroot" ]
 then
-    echo "If you see this text, you are now in your system (or chrooted)!"
-    echo "Getting timezones ready..."
+    echo ">>> If you see this text, you are now in your system (or chrooted)!"
+    echo ">>> Getting timezones ready..."
     sleep 1
     while true
     do
 	clear
-	echo "Listing all Zones"
+	echo ">>> Listing all Zones"
 	ls /usr/share/zoneinfo/
 	echo -n "Please type your zone [EX America]: "
 	# dia
@@ -52,7 +52,7 @@ then
     else
 	echo "Skipping then... [not recommended]"
     fi
-    echo "Generating the locale!"
+    echo ">>> Generating the locale!"
     locale-gen
     clear
     echo "Note, use A-Z,'-' characters only."
@@ -73,25 +73,9 @@ then
     echo ">>> Generating grub file..."
     grub-mkconfig -o /boot/grub/grub.cfg
     clear
-    # you know what needs to be done here saderror
-    echo "Hooray! You made it! :D. Your system is all ready for use... but, not entirely."
-    echo "Now it is time for a post-install."
-    echo "You are safe to reboot without doing a post install, which means"
-    echo "You have to manually install your desktop environment, tools, and many more.."
-    echo ""
-    echo "The post install will:"
-    echo "- Let you setup your user account"
-    echo "- Install your favorite tools"
-    echo "- Install a desktop environment/window manager"
-    echo "- Some other post install thingies..."
-    echo ""
-    echo "A post install is totally recommended! Meaning you should do it"
-    echo "-------------------------------------------"
-    echo "  Press any key to enter the post install"
     dialog --backtitle "ArchKick v$akversion" --msgbox "Hooray! You are in the post-install\n\nThe post install will:\n- Let you setup your user account\n- Install your favorite tools upon user confirmation\n- Install a desktop environment or window manager\n- Extra steps to ensure your install is ok\nYou are safe to reboot, but you should do the post install, its totally recommended!" 30 50
     read -rsn1
-    clear
-    echo "- Create your account -"
+    echo ">>> Create your account "
     echo "Please use characters a-z, A-Z, 1-9, and '-'."
     echo "Good username: bobthe-Cat0123"
     echo "BAD username: Bobby The Cat 42"
@@ -100,10 +84,10 @@ then
     read usname
     useradd -m -s /bin/bash $usname
     passwd $usname
-    echo "User $usname has been created!"
-    echo "Putting user in sudoers file"
+    echo ">>> User $usname has been created!"
+    echo ">>> Putting user in sudoers file"
     echo "$usname ALL=(ALL) ALL" >> /etc/sudoers
-    echo "User creation done..."
+    echo ">>> User creation done..."
     clear
     echo ">>> Desktop environments and window managers"
     echo "To select: Simply press the letter that you install, for example:"
@@ -215,11 +199,9 @@ then
     fi
     systemctl enable NetworkManager
     pacman -S network-manager-applet
-    echo "Installing pulseaudio so you can hear the ocean... :D"
+    echo ">>> Installing pulseaudio so you can hear the ocean... :D"
     pacman -S pulseaudio
     systemctl enable pulseaudio.socket
-    pacman -S pa-applet
-    systemctl enable pa-applet
     clear
     echo "Tool installation"
     echo "------------------"
@@ -382,9 +364,9 @@ then
     then
     	pacman -S vim
     fi
-    echo "You are at the end of the line for packages."
+    echo ">>> You are at the end of the line for packages."
     sleep 1
-    echo "Removing post installer..."
+    echo ">>> Removing post installer..."
     rm -rf /usr/bin/archkick
     clear
     echo "Hooray! :D"
@@ -412,12 +394,12 @@ else
     chc=$?
     if [ $chc = 0 ]
     then
-    	echo "Wifi selected. Running wifi-menu tool"
+    	echo ">>> Wifi selected. Running wifi-menu tool"
         wifi-menu
     	break
     elif [ $chc = 1 ]
     then
-        echo "Ethernet selected, no problem since it works out of the box!"
+        echo ">>> Ethernet selected, no problem since it works out of the box!"
         break
     else
         break
@@ -447,7 +429,7 @@ else
 	    break
 	elif [ "$swapa" = "n" ]
 	then
-	    echo "Swap will NOT be selected"
+	    echo ">>> Swap will NOT be selected"
 	    swap="off"
 	    break
 	else
@@ -460,7 +442,7 @@ else
     mkfs.ext4 /dev/$partname$partnum
     if [ "$swap" = "on" ]
     then
-	echo "Creating swap..."
+	echo ">>> Creating swap..."
 	mkswap /dev/$partname$swapnum
 	swapon /dev/$partname$swapnum
     fi
@@ -472,23 +454,23 @@ else
 	nano /etc/pacman.d/mirrorlist
     elif [ $rchc = 0 ]
     then
-	echo "Skipping then..."
+	echo ">>> Skipping then..."
     else
-	echo "Skipping then..."
+	echo ">>> Skipping then..."
     fi
     clear
     dialog --backtitle "ArchKick v$akversion" --yes-label "Full" --no-label "Base" --yesno "Getting ready to install the full system.\n\nIf you want base and base-devel, select full.\nIf you want base only, select base.\n\nIf you are confused, please select full." 10 50
     chcc=$?
     if [ $chcc = 0 ]
     then
-	echo "Installing the base and base-devel!"
+	echo ">>> Installing the base and base-devel!"
 	pacstrap /mnt base base-devel
     elif [ $chcc = 1 ]
     then
-	echo "Ok, installing base only. [Not recommended]"
+	echo ">>> Ok, installing base only. [Not recommended]"
 	pacstrap /mnt base
     else
-	echo "Non valid option selected. Installing base-devel..."
+	echo ">>> Non valid option selected. Installing base-devel..."
 	pacstrap /mnt base base-devel
     fi
     genfstab -U /mnt >> /mnt/etc/fstab
